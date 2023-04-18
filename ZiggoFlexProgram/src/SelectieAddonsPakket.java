@@ -1,5 +1,6 @@
 import java.util.Scanner;
 import java.util.List;
+import java.util.ArrayList;
 class SelectieAddonsPakket {
     private final Scanner scanner = new Scanner(System.in);
     private final List<String> addons = new ArrayList<>();

@@ -1,4 +1,5 @@
 import java.util.List;
+
 class Klant {
     private final String klantID;
     private final String naam;
@@ -8,16 +9,15 @@ class Klant {
     private final String pakketten;
     private final String addons;
 
-    public Klant(String klantID, String naam, String postcode, String huisnummer, String aanmaakdatum, String addons) {
+    public Klant(String klantID, String naam, String postcode, String huisnummer, String aanmaakdatum, String pakketten, String addons) {
         this.klantID = klantID;
         this.naam = naam;
         this.postcode = postcode;
         this.huisnummer = huisnummer;
         this.aanmaakdatum = aanmaakdatum;
-        this.pakketten = "";
+        this.pakketten = pakketten;
         this.addons = addons;
     }
-
 
     public String getKlantID() {
         return klantID;
@@ -43,29 +43,16 @@ class Klant {
         return pakketten;
     }
 
-    public void setPakketten(List<String> pakketten) {
-        StringBuilder pakketStringBuilder = new StringBuilder();
-        for (String pakket : pakketten) {
-            pakketStringBuilder.append(pakket);
-            pakketStringBuilder.append(", ");
-        }
-        this.pakketten = pakketStringBuilder.toString().trim();
-    }
-
-    public void setAddons(List<String> addons) {
-        StringBuilder addonsStringBuilder = new StringBuilder();
-        for (String addon : addons) {
-            addonsStringBuilder.append(addon);
-            addonsStringBuilder.append(", ");
-        }
-        this.addons = addonsStringBuilder.toString().trim();
-    }
-
     public String getAddons() {
         return addons;
     }
-}
 
+    public void setPakketten(List<String> pakketten) {
+    }
+
+    public void setAddons(List<String> addons) {
+    }
+}
 
 //Naam, postcode en huisnummer wordt hier opgeslagen
 //uniek KlantID wordt aangemaakt op basis van info klant
