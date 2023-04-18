@@ -1,11 +1,7 @@
-public class SelectiePakketInternetEnTV {
+public class SelectiePakketTVZonderInternet {
 }
-//In deze klasse wordt er de keuze gegeven tussen verschillende TV en Internet
-//pakketen zoals:
-//Tv start: bool
-//Tv complete: bool
-//Tv Max: bool
-
+//In deze klasse wordt er gekozen tussen TV pakketten als er geen internet pakket
+//gewenst is door de klant. De keuze is:
 
 //Internet start: bool
 //Internet complete: bool
