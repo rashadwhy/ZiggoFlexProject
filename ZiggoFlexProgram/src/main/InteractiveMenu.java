@@ -1,5 +1,5 @@
 import java.util.Scanner;
-import java.util.List;
+
 class InteractiveMenu {
     private final Scanner scanner = new Scanner(System.in);
     public final KlantDatabase database = new KlantDatabase();
