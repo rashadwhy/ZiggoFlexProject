@@ -7,21 +7,19 @@ class SelectiePakketTVZonderInternet {
 
     public void selecteerPakketten() {
         System.out.println("Welk TV pakket wilt u?");
-        System.out.println("1. TV Start");
-        System.out.println("2. TV Complete");
-        System.out.println("3. TV Max");
+        System.out.println("1. TV Start met mediabox €28,95");
+        System.out.println("2. TV Start met CI+ module €29,45");
+        System.out.println("Voor meer TV opties is een Internet pakket nodig.");
         int tvKeuze = scanner.nextInt();
 
         switch (tvKeuze) {
             case 1:
-                pakketten.add("TV Start");
+                pakketten.add("TV Start met mediabox");
                 break;
             case 2:
-                pakketten.add("TV Complete");
+                pakketten.add("TV Start met CI+ module");
                 break;
-            case 3:
-                pakketten.add("TV Max");
-                break;
+
             default:
                 System.out.println("Ongeldige keuze!");
         }

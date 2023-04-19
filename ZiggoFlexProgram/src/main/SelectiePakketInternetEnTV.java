@@ -7,15 +7,15 @@ class SelectiePakketInternetEnTV {
 
     public void selecteerPakketten() {
         System.out.println("Welk TV pakket wilt u?");
-        System.out.println("1. TV Start");
-        System.out.println("2. TV Complete");
-        System.out.println("3. TV Max");
+        System.out.println("1. TV Start €28,95,-");
+        System.out.println("2. TV Complete €21,-");
+        System.out.println("3. TV Max €33,-");
         int tvKeuze = scanner.nextInt();
 
         System.out.println("Welk Internet pakket wilt u?");
-        System.out.println("1. Internet Start");
-        System.out.println("2. Internet Complete");
-        System.out.println("3. Internet Max");
+        System.out.println("1. Internet Start €43,-");
+        System.out.println("2. Internet Complete €53,-");
+        System.out.println("3. Internet Max €62,-");
         int internetKeuze = scanner.nextInt();
 
         switch (tvKeuze) {
