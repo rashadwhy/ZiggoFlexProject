@@ -1,6 +1,7 @@
 import java.util.ArrayList;
-import java.util.Scanner;
 import java.util.List;
+import java.util.Scanner;
+
 class SelectiePakketInternetEnTV {
     private final Scanner scanner = new Scanner(System.in);
     private final List<String> pakketten = new ArrayList<>();
@@ -30,6 +31,7 @@ class SelectiePakketInternetEnTV {
                 break;
             default:
                 System.out.println("Ongeldige keuze!");
+                break;
         }
 
         switch (internetKeuze) {
@@ -44,10 +46,18 @@ class SelectiePakketInternetEnTV {
                 break;
             default:
                 System.out.println("Ongeldige keuze!");
+                break;
         }
     }
 
     public List<String> getPakketten() {
         return pakketten;
+    }
+
+    public void displayPakketten() {
+        System.out.println("Geselecteerde pakketten:");
+        for (String pakket : pakketten) {
+            System.out.println(pakket);
+        }
     }
 }
