@@ -83,7 +83,7 @@ class KlantDatabase {
         return klant;
     }
 
-    public void saveToXml() {
+    private void saveToXml() {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();

@@ -5,6 +5,7 @@ import java.util.*;
 public class InteractiveMenu {
     private final Scanner scanner = new Scanner(System.in);
     private final KlantDatabase klantDatabase = new KlantDatabase();
+    private final PostcodeCheck postcodeCheck = new PostcodeCheck(klantDatabase, "klantendatabase"); // Replace "your-database-name" with the actual database name
 
     public void run() {
         System.out.println("Welkom bij ZiggoFlex!");
@@ -30,19 +31,27 @@ public class InteractiveMenu {
         System.out.println("Voer uw postcode in:");
         String postcode = scanner.nextLine();
 
-        System.out.println("Voer uw huisnummer in:");
-        String huisnummer = scanner.nextLine();
+        if (postcodeCheck.isGeldig(postcode)) {
+            System.out.println("Postcode geaccepteerd! Doorgaan met de registratie...");
 
-        String klantID = UUID.randomUUID().toString();
-        String aanmaakdatum = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+            System.out.println("Voer uw huisnummer in:");
+            String huisnummer = scanner.nextLine();
 
-        List<String> pakketten = selectPakketten();
-        String addons = selectAddons();
+            String klantID = UUID.randomUUID().toString();
+            String aanmaakdatum = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
 
-        Klant klant = klantDatabase.nieuweKlant(klantID, naam, postcode, huisnummer, aanmaakdatum, pakketten, addons);
-        System.out.println("Nieuwe klant geregistreerd!");
-        System.out.println("Klantgegevens:");
-        printKlantgegevens(klant);
+            List<String> pakketten = selectPakketten();
+            String addons = selectAddons();
+
+            Klant klant = klantDatabase.nieuweKlant(klantID, naam, postcode, huisnummer, aanmaakdatum, pakketten, addons);
+            System.out.println("Nieuwe klant geregistreerd!");
+            System.out.println("Klantgegevens:");
+            printKlantgegevens(klant);
+        } else {
+            System.out.println("Sorry, het opgegeven postcodegebied wordt nog niet ondersteund.");
+            System.out.println("Bedankt voor uw interesse in ZiggoFlex. Probeer het later opnieuw.");
+            System.exit(0); // Terminate the program
+        }
     }
 
     private void bestaandeKlantInlog() {
@@ -92,8 +101,6 @@ public class InteractiveMenu {
             System.out.println("Klant niet gevonden.");
         }
     }
-
-
 
     private void printKlantgegevens(Klant klant) {
         System.out.println("KlantID: " + klant.getKlantID());
