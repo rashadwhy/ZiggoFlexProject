@@ -1,3 +1,4 @@
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -24,7 +25,7 @@ public class InteractiveMenu {
         }
     }
 
-    private void nieuweKlantRegistratie() {
+    public void nieuweKlantRegistratie() {
         System.out.println("Voer uw naam in:");
         String naam = scanner.nextLine();
 
@@ -49,7 +50,7 @@ public class InteractiveMenu {
             printKlantgegevens(klant);
         } else {
             System.out.println("Sorry, het opgegeven postcodegebied wordt nog niet ondersteund.");
-            System.out.println("Bedankt voor uw interesse in ZiggoFlex. Probeer het later opnieuw.");
+            System.out.println("Bedankt voor uw interesse in Ziggo. Probeer het later opnieuw.");
             System.exit(0); // Terminate the program
         }
     }

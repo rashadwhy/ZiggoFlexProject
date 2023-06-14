@@ -12,4 +12,28 @@
         </pakketten>
         <addons>[Ziggo Sport Totaal, Film1, ESPN Compleet, FOX Sports Compleet]</addons>
     </klant>
+    <klant>
+        <klantID>f5aff923-ac48-40fd-84c2-b00173f067ba</klantID>
+        <naam>Anwar Muradin</naam>
+        <postcode>2152EP</postcode>
+        <huisnummer>22</huisnummer>
+        <aanmaakdatum>14-06-2023</aanmaakdatum>
+        <pakketten>
+            <pakket>TV Max</pakket>
+            <pakket>Internet Max</pakket>
+        </pakketten>
+        <addons>[Ziggo Sport Totaal, Film1, ESPN Compleet, FOX Sports Compleet]</addons>
+    </klant>
+    <klant>
+        <klantID>6437eca5-7d72-44a8-b0eb-ae578d2d00e1</klantID>
+        <naam>Anwar Muradin</naam>
+        <postcode>2152EP</postcode>
+        <huisnummer>22</huisnummer>
+        <aanmaakdatum>15-06-2023</aanmaakdatum>
+        <pakketten>
+            <pakket>TV Max</pakket>
+            <pakket>Internet Max</pakket>
+        </pakketten>
+        <addons>[Ziggo Sport Totaal, Film1, ESPN Compleet, FOX Sports Compleet]</addons>
+    </klant>
 </klanten>
