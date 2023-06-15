@@ -1,11 +1,15 @@
 class KortingCheck {
     private final String klantID;
+    private final KlantDatabase klantDatabase;
 
-    public KortingCheck(String klantID) {
+    public KortingCheck(String klantID, KlantDatabase klantDatabase) {
         this.klantID = klantID;
+        this.klantDatabase = klantDatabase;
     }
 
     public boolean isUniek() {
-        return true; // TODO: implementatie
+        boolean isUnique = !klantDatabase.existsCustomer(klantID);
+
+        return isUnique;
     }
 }

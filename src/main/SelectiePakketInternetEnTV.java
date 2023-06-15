@@ -2,11 +2,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-class SelectiePakketInternetEnTV {
-    private final Scanner scanner = new Scanner(System.in);
+class SelectiePakketInternetEnTV implements PakketSelector {
     private final List<String> pakketten = new ArrayList<>();
+    private final List<String> addons = new ArrayList<>();
 
-    public void selecteerPakketten() {
+    public void selecteerPakketten(Scanner scanner) {
         System.out.println("Welk TV pakket wilt u?");
         System.out.println("1. TV Start €28,95,-");
         System.out.println("2. TV Complete €21,-");
@@ -52,6 +52,10 @@ class SelectiePakketInternetEnTV {
 
     public List<String> getPakketten() {
         return pakketten;
+    }
+
+    public List<String> getAddons() {
+        return addons;
     }
 
     public void displayPakketten() {

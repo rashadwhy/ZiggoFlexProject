@@ -50,9 +50,19 @@ class SelectieAddonsPakket {
         }
     }
 
-    public String getAddons() {
+    public List<String> getAddons() {
+        return addons;
+    }
+
+    public String getFormattedAddons() {
         if (!addons.isEmpty()) {
-            return addons.toString();
+            StringBuilder sb = new StringBuilder();
+            sb.append("Addons: ");
+            for (String addon : addons) {
+                sb.append(addon).append(", ");
+            }
+            sb.setLength(sb.length() - 2); // Remove the trailing comma and space
+            return sb.toString();
         } else {
             return "Geen addons";
         }

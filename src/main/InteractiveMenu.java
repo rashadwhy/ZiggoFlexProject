@@ -1,12 +1,14 @@
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+import java.util.UUID;
 
 public class InteractiveMenu {
     private final Scanner scanner = new Scanner(System.in);
     private final KlantDatabase klantDatabase = new KlantDatabase();
-    private final PostcodeCheck postcodeCheck = new PostcodeCheck(klantDatabase, "klantendatabase"); // Replace "your-database-name" with the actual database name
+    private final PostcodeCheck postcodeCheck = new PostcodeCheck(klantDatabase, "klantendatabase");
 
     public void run() {
         System.out.println("Welkom bij ZiggoFlex!");
@@ -38,22 +40,42 @@ public class InteractiveMenu {
             System.out.println("Voer uw huisnummer in:");
             String huisnummer = scanner.nextLine();
 
-            String klantID = UUID.randomUUID().toString();
-            String aanmaakdatum = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+            Klant existingKlant = klantDatabase.getKlant(postcode, huisnummer);
+            if (existingKlant != null) {
+                System.out.println("Bestaande klant gevonden. De database zal worden bijgewerkt.");
 
-            List<String> pakketten = selectPakketten();
-            String addons = selectAddons();
+                // Update the package and addons for the existing customer
+                List<String> pakketten = selectPakketten();
+                List<String> addons = selectAddons();
+                existingKlant.setPakketten(pakketten);
+                existingKlant.setAddons(addons);
 
-            Klant klant = klantDatabase.nieuweKlant(klantID, naam, postcode, huisnummer, aanmaakdatum, pakketten, addons);
-            System.out.println("Nieuwe klant geregistreerd!");
-            System.out.println("Klantgegevens:");
-            printKlantgegevens(klant);
+                System.out.println("Klantgegevens bijgewerkt:");
+                printKlantgegevens(existingKlant);
+            } else {
+                System.out.println("Geen bestaande klant gevonden. Nieuwe klant wordt geregistreerd...");
+
+                String klantID = UUID.randomUUID().toString();
+                String aanmaakdatum = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+
+                List<String> pakketten = selectPakketten();
+                List<String> addons = selectAddons();
+
+                Klant klant = klantDatabase.nieuweKlant(klantID, naam, postcode, huisnummer, aanmaakdatum, pakketten, addons);
+                System.out.println("Nieuwe klant geregistreerd!");
+                System.out.println("Klantgegevens:");
+                printKlantgegevens(klant);
+            }
         } else {
-            System.out.println("Sorry, het opgegeven postcodegebied wordt nog niet ondersteund.");
+            System.out.println("Sorry, het opgegeven postcodegebied wordt nog niet ondersteund, omdat hier nog geen verbindingslijnen zijn aangelegd.");
             System.out.println("Bedankt voor uw interesse in Ziggo. Probeer het later opnieuw.");
-            System.exit(0); // Terminate the program
+            System.exit(0);
         }
     }
+
+
+
+
 
     private void bestaandeKlantInlog() {
         System.out.println("Voer uw postcode in:");
@@ -78,8 +100,7 @@ public class InteractiveMenu {
             if (keuze == 1) {
                 List<String> nieuwePakketten = selectPakketten();
                 klant.setPakketten(nieuwePakketten);
-            } else {
-                klant.setPakketten(Collections.emptyList());
+                System.out.println("Pakketten succesvol gewijzigd!");
             }
 
             System.out.println("Wilt u uw addons wijzigen?");
@@ -89,33 +110,18 @@ public class InteractiveMenu {
             scanner.nextLine();
 
             if (keuze == 1) {
-                String nieuweAddons = selectAddons();
+                List<String> nieuweAddons = selectAddons();
                 klant.setAddons(nieuweAddons);
-            } else {
-                klant.setAddons("");
+                System.out.println("Addons succesvol gewijzigd!");
             }
 
-            System.out.println("Klantgegevens bijgewerkt!");
             System.out.println("Nieuwe klantgegevens:");
             printKlantgegevens(klant);
         } else {
-            System.out.println("Klant niet gevonden.");
+            System.out.println("Klant niet gevonden. Probeer het opnieuw of registreer als nieuwe klant.");
         }
     }
 
-    private void printKlantgegevens(Klant klant) {
-        System.out.println("KlantID: " + klant.getKlantID());
-        System.out.println("Naam: " + klant.getNaam());
-        System.out.println("Postcode: " + klant.getPostcode());
-        System.out.println("Huisnummer: " + klant.getHuisnummer());
-        System.out.println("Aanmaakdatum: " + klant.getAanmaakdatum());
-        System.out.println("Pakketten: " + klant.getPakketten());
-
-        String addons = klant.getAddons();
-        if (!addons.equals("Geen addons")) {
-            System.out.println("Addons: " + addons);
-        }
-    }
 
     private List<String> selectPakketten() {
         System.out.println("Maak alstublieft een keuze voor het pakket:");
@@ -124,25 +130,80 @@ public class InteractiveMenu {
         int pakketKeuze = scanner.nextInt();
         scanner.nextLine();
 
+        PakketSelector pakketSelector;
+
         if (pakketKeuze == 1) {
-            SelectiePakketInternetEnTV pakketSelector = new SelectiePakketInternetEnTV();
-            pakketSelector.selecteerPakketten();
-            return pakketSelector.getPakketten();
+            pakketSelector = new SelectiePakketInternetEnTV();
         } else if (pakketKeuze == 2) {
-            SelectiePakketTVZonderInternet pakketSelector = new SelectiePakketTVZonderInternet();
-            pakketSelector.selecteerPakketten();
-            return pakketSelector.getPakketten();
+            pakketSelector = new SelectiePakketTVZonderInternet();
         } else {
             System.out.println("Ongeldige keuze!");
             return new ArrayList<>();
         }
+
+        pakketSelector.selecteerPakketten(scanner);
+        List<String> pakketten = pakketSelector.getPakketten();
+        List<String> addons = pakketSelector.getAddons();
+
+        System.out.println("Geselecteerde pakketten:");
+        for (String pakket : pakketten) {
+            System.out.println(pakket);
+        }
+
+        System.out.println("Geselecteerde addons:");
+        for (String addon : addons) {
+            System.out.println(addon);
+        }
+
+        return pakketten;
     }
 
-    private String selectAddons() {
-        SelectieAddonsPakket addonsSelector = new SelectieAddonsPakket();
-        addonsSelector.selecteerAddons();
-        return addonsSelector.getAddons();
+    private List<String> selectAddons() {
+        List<String> addons = new ArrayList<>();
+
+        System.out.println("Maak alstublieft een keuze voor de addons:");
+        System.out.println("1. Ziggo Sport Totaal");
+        System.out.println("2. Film1");
+        System.out.println("3. ESPN Compleet");
+        System.out.println("4. FOX Sports Compleet");
+        System.out.println("0. Stoppen met het toevoegen van addons");
+
+        int addonChoice;
+        do {
+            addonChoice = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (addonChoice) {
+                case 1:
+                    addons.add("Ziggo Sport Totaal");
+                    break;
+                case 2:
+                    addons.add("Film1");
+                    break;
+                case 3:
+                    addons.add("ESPN Compleet");
+                    break;
+                case 4:
+                    addons.add("FOX Sports Compleet");
+                    break;
+                case 0:
+                    System.out.println("Addons selectie gestopt.");
+                    break;
+                default:
+                    System.out.println("Ongeldige keuze!");
+                    break;
+            }
+        } while (addonChoice != 0);
+
+        return addons;
     }
+
+
+
+    private void printKlantgegevens(Klant klant) {
+        SamenvattingVoorVerkoper.printKlantgegevens(klant);
+    }
+
 
     public static void main(String[] args) {
         InteractiveMenu menu = new InteractiveMenu();

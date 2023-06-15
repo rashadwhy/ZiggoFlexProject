@@ -15,12 +15,20 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 class KlantDatabase {
     private final List<Klant> klanten = new ArrayList<>();
     private final String xmlFilePath = "klantendatabase.xml";
+
+    public boolean existsCustomer(String klantID) {
+        for (Klant klant : klanten) {
+            if (klant.getKlantID().equals(klantID)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public KlantDatabase() {
         loadFromXml();
@@ -61,7 +69,14 @@ class KlantDatabase {
             pakketten.add(pakket);
         }
 
-        String addons = getTextValue(klantElement, "addons");
+        List<String> addons = new ArrayList<>();
+        Element addonsElement = (Element) klantElement.getElementsByTagName("addons").item(0);
+        NodeList addonNodes = addonsElement.getElementsByTagName("addon");
+        for (int i = 0; i < addonNodes.getLength(); i++) {
+            Element addonElement = (Element) addonNodes.item(i);
+            String addon = addonElement.getTextContent();
+            addons.add(addon);
+        }
 
         return new Klant(klantID, naam, postcode, huisnummer, aanmaakdatum, pakketten, addons);
     }
@@ -69,14 +84,18 @@ class KlantDatabase {
     private String getTextValue(Element element, String tagName) {
         NodeList nodeList = element.getElementsByTagName(tagName);
         if (nodeList != null && nodeList.getLength() > 0) {
-            Element tagElement = (Element) nodeList.item(0);
-            return tagElement.getTextContent();
+            StringBuilder textContent = new StringBuilder();
+            for (int i = 0; i < nodeList.getLength(); i++) {
+                Element tagElement = (Element) nodeList.item(i);
+                textContent.append(tagElement.getTextContent());
+            }
+            return textContent.toString();
         }
         return "";
     }
 
     public Klant nieuweKlant(String klantID, String naam, String postcode, String huisnummer, String aanmaakdatum,
-                             List<String> pakketten, String addons) {
+                             List<String> pakketten, List<String> addons) {
         Klant klant = new Klant(klantID, naam, postcode, huisnummer, aanmaakdatum, pakketten, addons);
         klanten.add(klant);
         saveToXml();
@@ -124,7 +143,11 @@ class KlantDatabase {
         }
         klantElement.appendChild(pakkettenElement);
 
-        appendChildElement(document, klantElement, "addons", klant.getAddons());
+        Element addonsElement = document.createElement("addons");
+        for (String addon : klant.getAddons()) {
+            appendChildElement(document, addonsElement, "addon", addon);
+        }
+        klantElement.appendChild(addonsElement);
 
         return klantElement;
     }

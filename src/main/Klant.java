@@ -7,9 +7,10 @@ class Klant {
     private final String huisnummer;
     private final String aanmaakdatum;
     private List<String> pakketten;
-    private String addons;
+    private List<String> addons;
 
-    public Klant(String klantID, String naam, String postcode, String huisnummer, String aanmaakdatum, List<String> pakketten, String addons) {
+    public Klant(String klantID, String naam, String postcode, String huisnummer, String aanmaakdatum,
+                 List<String> pakketten, List<String> addons) {
         this.klantID = klantID;
         this.naam = naam;
         this.postcode = postcode;
@@ -43,7 +44,7 @@ class Klant {
         return pakketten;
     }
 
-    public String getAddons() {
+    public List<String> getAddons() {
         return addons;
     }
 
@@ -51,7 +52,7 @@ class Klant {
         this.pakketten = pakketten;
     }
 
-    public void setAddons(String addons) {
+    public void setAddons(List<String> addons) {
         this.addons = addons;
     }
 }

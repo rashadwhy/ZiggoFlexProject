@@ -12,8 +12,11 @@ public class PostcodeCheck {
     }
 
     public boolean isGeldig(String postcode) {
-        // Validate the format of the postcode using a regular expression
-        boolean validFormat = Pattern.matches("\\d{4}[\\s]?[A-Z]{2}", postcode);
+        // Normalize the postcode by removing all non-alphanumeric characters and converting to uppercase
+        String normalizedPostcode = postcode.replaceAll("[^a-zA-Z0-9]", "").toUpperCase();
+
+        // Validate the format of the normalized postcode using a regular expression
+        boolean validFormat = Pattern.matches("\\d{4}[A-Z]{2}", normalizedPostcode);
 
         if (!validFormat) {
             // Postcode has an invalid format
@@ -21,7 +24,7 @@ public class PostcodeCheck {
         }
 
         // Extract the numeric part of the postcode by removing the last two characters
-        String numericPostcode = postcode.substring(0, 4);
+        String numericPostcode = normalizedPostcode.substring(0, 4);
 
         // Convert the numeric postcode to an integer for comparison
         int inputPostcode = Integer.parseInt(numericPostcode);
