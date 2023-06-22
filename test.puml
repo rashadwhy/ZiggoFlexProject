@@ -1,0 +1,86 @@
+@startuml
+class KortingChecker {
+- String postcode
+- String huisnummer
++ boolean isUniek()
+}
+class SelectieAddonsPakket {
+- Scanner scanner
+- List<String> addons
++ void selecteerAddons()
++ String getAddons()
+}
+class Klant {
+- String klantID
+- String naam
+- String postcode
+- String huisnummer
+- String aanmaakdatum
+- List<String> pakketten
+- String addons
++ String getKlantID()
++ String getNaam()
++ String getPostcode()
++ String getHuisnummer()
++ String getAanmaakdatum()
++ List<String> getPakketten()
++ String getAddons()
++ void setPakketten(List<String>)
++ void setAddons(String)
+}
+class SelectiePakketInternetEnTV {
+- Scanner scanner
+- List<String> pakketten
++ void selecteerPakketten()
++ List<String> getPakketten()
++ void displayPakketten()
+}
+class BestaandeKlantInlog {
+- Scanner scanner
++ void KlantInlog()
+}
+class NieuweKlantRegistratie {
+- Scanner scanner
++ void klantRegistratie()
+}
+class KeuzeMenu {
+- Scanner scanner
+- KlantDatabase klantDatabase
++ void run()
++ {static} void main(String[])
+}
+class PakkettenSelector {
+- Scanner scanner
++ List<String> selectPakketten()
+}
+class KlantDatabase {
+- {static} List<Klant> klanten
+- String xmlFilePath
+- void loadFromXml()
+- Klant parseKlantFromElement(Element)
+- String getTextValue(Element,String)
++ {static} Klant nieuweKlant(String,String,String,String,String,List<String>,String)
++ void saveToXml()
+- Element createKlantElement(Document,Klant)
+- void appendChildElement(Document,Element,String,String)
++ {static} Klant getKlant(String,String)
++ Collection<Klant> getKlanten()
+}
+class PostcodeCheck {
+- KlantDatabase klantDatabase
+- String databaseName
++ {static} boolean isGeldig(String)
+}
+class SamenvattingVoorVerkoper {
++ {static} void printKlantgegevens(Klant)
+}
+class SelectiePakketTVZonderInternet {
+- Scanner scanner
+- List<String> pakketten
++ void selecteerPakketten()
++ List<String> getPakketten()
+}
+class Main {
++ {static} void main(String[])
+}
+@enduml
