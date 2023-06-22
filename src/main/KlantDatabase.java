@@ -18,17 +18,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 class KlantDatabase {
-    private final List<Klant> klanten = new ArrayList<>();
+    private static final List<Klant> klanten = new ArrayList<>();
     private final String xmlFilePath = "klantendatabase.xml";
-
-    public boolean existsCustomer(String klantID) {
-        for (Klant klant : klanten) {
-            if (klant.getKlantID().equals(klantID)) {
-                return true;
-            }
-        }
-        return false;
-    }
 
     public KlantDatabase() {
         loadFromXml();
@@ -69,14 +60,7 @@ class KlantDatabase {
             pakketten.add(pakket);
         }
 
-        List<String> addons = new ArrayList<>();
-        Element addonsElement = (Element) klantElement.getElementsByTagName("addons").item(0);
-        NodeList addonNodes = addonsElement.getElementsByTagName("addon");
-        for (int i = 0; i < addonNodes.getLength(); i++) {
-            Element addonElement = (Element) addonNodes.item(i);
-            String addon = addonElement.getTextContent();
-            addons.add(addon);
-        }
+        String addons = getTextValue(klantElement, "addons");
 
         return new Klant(klantID, naam, postcode, huisnummer, aanmaakdatum, pakketten, addons);
     }
@@ -84,25 +68,22 @@ class KlantDatabase {
     private String getTextValue(Element element, String tagName) {
         NodeList nodeList = element.getElementsByTagName(tagName);
         if (nodeList != null && nodeList.getLength() > 0) {
-            StringBuilder textContent = new StringBuilder();
-            for (int i = 0; i < nodeList.getLength(); i++) {
-                Element tagElement = (Element) nodeList.item(i);
-                textContent.append(tagElement.getTextContent());
-            }
-            return textContent.toString();
+            Element tagElement = (Element) nodeList.item(0);
+            return tagElement.getTextContent();
         }
         return "";
     }
 
-    public Klant nieuweKlant(String klantID, String naam, String postcode, String huisnummer, String aanmaakdatum,
-                             List<String> pakketten, List<String> addons) {
+    public static Klant nieuweKlant(String klantID, String naam, String postcode, String huisnummer, String aanmaakdatum,
+                                    List<String> pakketten, String addons) {
         Klant klant = new Klant(klantID, naam, postcode, huisnummer, aanmaakdatum, pakketten, addons);
         klanten.add(klant);
-        saveToXml();
+        KlantDatabase klantDatabase = new KlantDatabase();
+        klantDatabase.saveToXml();
         return klant;
     }
 
-    private void saveToXml() {
+    public void saveToXml() {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
@@ -143,11 +124,7 @@ class KlantDatabase {
         }
         klantElement.appendChild(pakkettenElement);
 
-        Element addonsElement = document.createElement("addons");
-        for (String addon : klant.getAddons()) {
-            appendChildElement(document, addonsElement, "addon", addon);
-        }
-        klantElement.appendChild(addonsElement);
+        appendChildElement(document, klantElement, "addons", klant.getAddons());
 
         return klantElement;
     }
@@ -158,7 +135,7 @@ class KlantDatabase {
         parentElement.appendChild(childElement);
     }
 
-    public Klant getKlant(String postcode, String huisnummer) {
+    public static Klant getKlant(String postcode, String huisnummer) {
         for (Klant klant : klanten) {
             if (klant.getPostcode().equals(postcode) && klant.getHuisnummer().equals(huisnummer)) {
                 return klant;

@@ -2,10 +2,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-class SelectiePakketTVZonderInternet implements PakketSelector {
+class SelectiePakketTVZonderInternet {
+    private final Scanner scanner = new Scanner(System.in);
     private final List<String> pakketten = new ArrayList<>();
 
-    public void selecteerPakketten(Scanner scanner) {
+    public void selecteerPakketten() {
         System.out.println("Welk TV pakket wilt u?");
         System.out.println("1. TV Start €28,95,-");
         System.out.println("2. TV Complete €21,-");
@@ -13,27 +14,14 @@ class SelectiePakketTVZonderInternet implements PakketSelector {
         int tvKeuze = scanner.nextInt();
 
         switch (tvKeuze) {
-            case 1:
-                pakketten.add("TV Start");
-                break;
-            case 2:
-                pakketten.add("TV Complete");
-                break;
-            case 3:
-                pakketten.add("TV Max");
-                break;
-            default:
-                System.out.println("Ongeldige keuze!");
-                break;
+            case 1 -> pakketten.add("TV Start");
+            case 2 -> pakketten.add("TV Complete");
+            case 3 -> pakketten.add("TV Max");
+            default -> System.out.println("Ongeldige keuze!");
         }
     }
 
     public List<String> getPakketten() {
         return pakketten;
-    }
-
-    public List<String> getAddons() {
-        // No addons for TV-only packages
-        return new ArrayList<>();
     }
 }
