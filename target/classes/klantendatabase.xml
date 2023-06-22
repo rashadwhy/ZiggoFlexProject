@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<klanten>
+    <klant>
+        <klantID>0597911a-e000-4291-b05c-4319a3654551</klantID>
+        <naam>Anwar Muradin</naam>
+        <postcode>2152ep</postcode>
+        <huisnummer>22</huisnummer>
+        <aanmaakdatum>15-06-2023</aanmaakdatum>
+        <pakketten>
+            <pakket>TV Complete</pakket>
+            <pakket>Internet Complete</pakket>
+        </pakketten>
+        <addons/>
+    </klant>
+    <klant>
+        <klantID>8f187cfe-3756-493b-a678-22100a6a8ab2</klantID>
+        <naam>Anwar Muradin</naam>
+        <postcode>2152Ep</postcode>
+        <huisnummer>22</huisnummer>
+        <aanmaakdatum>15-06-2023</aanmaakdatum>
+        <pakketten>
+            <pakket>TV Start</pakket>
+            <pakket>Internet Start</pakket>
+        </pakketten>
+        <addons/>
+    </klant>
+</klanten>
