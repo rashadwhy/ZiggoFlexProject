@@ -2,10 +2,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
-public class BestaandeKlantInlog {
+class BestaandeKlantInlog implements KlantRegistratie {
     private final Scanner scanner = new Scanner(System.in);
 
-    public void KlantInlog() {
+    public void klantRegistratie() {
         System.out.println("Voer uw postcode in:");
         String postcode = scanner.nextLine();
 

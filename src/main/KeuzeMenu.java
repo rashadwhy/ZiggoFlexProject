@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class KeuzeMenu {
     private final Scanner scanner = new Scanner(System.in);
-    private final KlantDatabase klantDatabase = new KlantDatabase();
+
     public void run() {
         System.out.println("Welkom bij ZiggoFlex!");
         System.out.println("Bent u een nieuwe of bestaande klant?");
@@ -11,16 +11,20 @@ public class KeuzeMenu {
         int keuze = scanner.nextInt();
         scanner.nextLine();
 
+        KlantRegistratie registratie;
+
         if (keuze == 1) {
-            NieuweKlantRegistratie nieuweKlantRegistratie = new NieuweKlantRegistratie();
-            nieuweKlantRegistratie.klantRegistratie();
+            registratie = new NieuweKlantRegistratie();
         } else if (keuze == 2) {
-            BestaandeKlantInlog bestaandeKlantInlog = new BestaandeKlantInlog();
-            bestaandeKlantInlog.KlantInlog();
+            registratie = new BestaandeKlantInlog();
         } else {
             System.out.println("Ongeldige keuze!");
+            return;
         }
+
+        registratie.klantRegistratie();
     }
+
 
 
     public static void main(String[] args) {

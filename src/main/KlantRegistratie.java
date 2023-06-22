@@ -1,0 +1,3 @@
+interface KlantRegistratie {
+    void klantRegistratie();
+}
