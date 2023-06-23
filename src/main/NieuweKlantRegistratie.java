@@ -45,7 +45,8 @@ class NieuweKlantRegistratie implements KlantRegistratie {
 
                 System.out.println("Nieuwe klant geregistreerd!");
                 System.out.println("Klantgegevens:");
-                SamenvattingVoorVerkoper.printKlantgegevens(klant); // Launch the summary for the salesperson
+                printKlantGegevens klantGegevens = new printKlantGegevens();
+                klantGegevens.printKlantgegevens(klant);
             } else {
                 System.out.println("Sorry, het opgegeven postcodegebied wordt nog niet ondersteund.");
                 System.out.println("Bedankt voor uw interesse in Ziggo. Probeer het later opnieuw.");

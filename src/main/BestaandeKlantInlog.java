@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 class BestaandeKlantInlog implements KlantRegistratie {
     private final Scanner scanner = new Scanner(System.in);
+    private final KlantDatabase klantDatabase = new KlantDatabase();
 
     public void klantRegistratie() {
         System.out.println("Voer uw postcode in:");
@@ -12,13 +13,13 @@ class BestaandeKlantInlog implements KlantRegistratie {
         System.out.println("Voer uw huisnummer in:");
         String huisnummer = scanner.nextLine();
 
-        Klant klant = KlantDatabase.getKlant(postcode, huisnummer);
+        Klant klant = klantDatabase.getKlant(postcode, huisnummer);
 
         if (klant != null) {
             System.out.println("Klant gevonden!");
             System.out.println("Klantgegevens:");
-            SamenvattingVoorVerkoper.printKlantgegevens(klant); // Launch the summary for the salesperson
-
+            printKlantGegevens klantGegevens = new printKlantGegevens();
+            klantGegevens.printKlantgegevens(klant);
             System.out.println("Wilt u uw pakketten wijzigen?");
             System.out.println("1. Ja");
             System.out.println("2. Nee");
@@ -50,8 +51,10 @@ class BestaandeKlantInlog implements KlantRegistratie {
 
             System.out.println("Klantgegevens bijgewerkt!");
             System.out.println("Nieuwe klantgegevens:");
-            SamenvattingVoorVerkoper.printKlantgegevens(klant); // Launch the updated summary for the salesperson
+            printBewerkteGegevens bewerkteGegevens = new printBewerkteGegevens();
+            bewerkteGegevens.printKlantgegevens(klant);
 
+            klantDatabase.saveToXml(); // Update the customer information in the XML file
         } else {
             System.out.println("Klant niet gevonden.");
         }
