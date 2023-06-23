@@ -36,7 +36,6 @@ class KortingChecker {
                     String storedHuisnummer = element.getElementsByTagName("huisnummer").item(0).getTextContent();
 
                     if (postcode.equals(storedPostcode) && huisnummer.equals(storedHuisnummer)) {
-                        // Matching entry found, not unique
                         return false;
                     }
                 }
@@ -45,7 +44,6 @@ class KortingChecker {
             e.printStackTrace();
         }
 
-        // No matching entry found, unique
         return true;
     }
 }

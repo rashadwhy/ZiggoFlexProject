@@ -22,16 +22,13 @@ class NieuweKlantRegistratie implements KlantRegistratie {
                 System.out.println("Voer uw huisnummer in:");
                 String huisnummer = scanner.nextLine();
 
-                // Create a new instance of KortingChecker
                 KortingChecker kortingChecker = new KortingChecker(postcode, huisnummer);
 
                 String klantID = UUID.randomUUID().toString();
                 String aanmaakdatum = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
 
-                // Offer a discount for new customers
                 if (kortingChecker.isUniek()) {
                     System.out.println("Gefeliciteerd! U komt in aanmerking voor een speciale korting in de vorm van Cashback, een MediaMarkt cadeaukaart of maandelijkse korting. Vraag de verkoper voor meer informatie.");
-                    // Apply the discount logic here
                 }
 
                 PakkettenSelector pakketSelector = new PakkettenSelector();

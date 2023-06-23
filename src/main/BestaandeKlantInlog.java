@@ -54,7 +54,7 @@ class BestaandeKlantInlog implements KlantRegistratie {
             printBewerkteGegevens bewerkteGegevens = new printBewerkteGegevens();
             bewerkteGegevens.printKlantgegevens(klant);
 
-            klantDatabase.saveToXml(); // Update the customer information in the XML file
+            klantDatabase.saveToXml();
         } else {
             System.out.println("Klant niet gevonden.");
         }

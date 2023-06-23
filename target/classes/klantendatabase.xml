@@ -7,10 +7,10 @@
         <huisnummer>22</huisnummer>
         <aanmaakdatum>15-06-2023</aanmaakdatum>
         <pakketten>
-            <pakket>TV Complete</pakket>
-            <pakket>Internet Complete</pakket>
+            <pakket>TV Start</pakket>
+            <pakket>Internet Start</pakket>
         </pakketten>
-        <addons/>
+        <addons>[Ziggo Sport Totaal]</addons>
     </klant>
     <klant>
         <klantID>8f187cfe-3756-493b-a678-22100a6a8ab2</klantID>
